@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>扇形导航</title>
+    <style>
+        html,body{
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrap{
+            position: fixed;
+            right: 15px;
+            bottom: 15px;
+            height: 50px;
+            width: 50px;
+        }
+        .inner{
+            height: 100%;
+        }
+        .imgBtns{
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 50%;
+            margin: 4px;
+            /*transition: 1s;*/
+        }
+        .home{
+            background:url("img/home.png") no-repeat;
+            z-index: 2;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transition: 1s;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="inner">
+        <img src="img/full.png" class="imgBtns">
+        <img src="img/open.png" class="imgBtns">
+        <img src="img/clos.png" class="imgBtns">
+        <img src="img/prev.png" class="imgBtns">
+        <img src="img/refresh.png" class="imgBtns">
+    </div>
+    <div class="home"></div>
+</div>
+<script>
+    window.onload=function () {
+        var homeBtn=document.querySelector('.home');
+        var imgBtns=document.querySelectorAll('.imgBtns');
+        var flag=true;
+
+        // 第一部分 让导航图片显示
+        for (var i=0;i<imgBtns.length;i++){
+            imgBtns[i].onclick=function () {
+                this.style.transition='.5s';
+                this.style.transform='rotate(-360deg) scale(2)';
+                this.style.opacity=.1;
+                this.addEventListener('transitionend',fn);
+            }
+        }
+        // 过渡完成的回调函数
+         function fn(){
+             this.style.transition='.3s';
+             this.style.transform='rotate(-360deg) scale(1)';
+             this.style.opacity=1;
+            this.removeEventListener('transitionend',fn);
+         }
+
+
+
+
+        // 第二部分 导航图片点击放大
+        homeBtn.onclick=function () {
+            if (flag){
+                this.style.transform='rotate(-360deg)';
+                for (var i=0;i<imgBtns.length;i++){
+                    imgBtns[i].style.transition='1s '+(i*.1)+'s';
+                    imgBtns[i].style.transform='rotate(-360deg) scale(1)';
+                    imgBtns[i].style.left=-getPoint(140,90*i/(imgBtns.length-1)).left+'px';
+                    imgBtns[i].style.top=-getPoint(140,90*i/(imgBtns.length-1)).top+'px';
+                }
+
+            }else {
+                this.style.transform = 'rotate(0deg)';
+                for (var i = 0; i < imgBtns.length; i++) {
+                    imgBtns[i].style.transition = '1s ' + ((imgBtns.length-1-i) * 0.1) + 's';
+                    imgBtns[i].style.transform = 'rotate(0deg) scale(1)';
+                    imgBtns[i].style.left = 0+'px';
+                    imgBtns[i].style.top = 0+'px';
+                }
+            }
+            flag=!flag;
+
+        }
+        // 已知一边一角，求坐标
+        function getPoint(c,deg) {
+            var x=Math.round(c*Math.sin(deg*Math.PI/180));
+            var y=Math.round(c*Math.cos(deg*Math.PI/180));
+            return {left:x,top:y};
+        }
+    }
+</script>
+</body>
+</html>

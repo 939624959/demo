@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>员工表增删</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        .wrap{font:18px/1.5 '微软雅黑';}
+        table{border-collapse: collapse;width: 400px;text-align: center;margin: 20px auto;}
+        thead{font-weight: bold;}
+        td{border: 1px solid;height: 28px;line-height: 28px;}
+        .form{width: 400px;margin: 0 auto;border: 1px solid;}
+        .title{display:block;font-weight: bold;margin: 40px 20px 20px;}
+        span{display:inline-block;width: 60px;height: 28px;line-height: 28px;margin: 5px 5px 5px 20px;}
+        input{width: 280px;height: 24px;text-indent: 1em;font-size: 16px;}
+        .submit{width: 70px;margin: 20px auto;display: block;font-size: 18px;cursor: pointer;}
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <table>
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Salary</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody class="info">
+            <tr>
+                <td>tom</td>
+                <td>tom@123.com</td>
+                <td>8000</td>
+                <td><a href="javascript:;">Delete</a></td>
+            </tr>
+            <tr>
+                <td>Jerry</td>
+                <td>jerry@sohu.com</td>
+                <td>5000</td>
+                <td><a href="javascript:;">Delete</a></td>
+            </tr>
+            <tr>
+                <td>Bob</td>
+                <td>bob@tom.com</td>
+                <td>6000</td>
+                <td><a href="javascript:;">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form">
+            <div class="title">添加新员工</div>
+            <span>name:</span><input type="text" id="name" name="name"> <br>
+            <span>email:</span><input type="text" id="email" name="email"> <br>
+            <span>salary:</span><input type="text" id="salary" name="salary"> <br>
+            <button class="submit" type="submit">submit</button>
+    </div>
+</div>
+<script>
+window.onload=function () {
+    var btn=document.querySelector('.submit');
+    var tbody=document.querySelector('.info');
+
+    btn.onclick=function () {
+        var name=document.getElementById('name');
+        var email=document.getElementById('email');
+        var salary=document.getElementById('salary');
+        var tr=document.createElement('tr');
+        console.log(name.value);
+        tr.innerHTML='<td>'+name.value+'</td>'+
+                     '<td>'+email.value+'</td>'+
+                     '<td>'+salary.value+'</td>'+
+                     '<td><a href="javascript:;">Delete</a></td>';
+        tbody.appendChild(tr);
+        name.value='';
+        email.value='';
+        salary.value='';
+    }
+    tbody.onclick=function (ev) {
+        ev=ev||event;
+        if(ev.target.innerText=='Delete'){
+            var tr=ev.target.parentNode.parentNode;
+            // console.log(tr.children[0].innerHTML)
+            var name=tr.children[0].innerText;
+            var confirm=window.confirm('确定删除'+name+'吗？');
+            if (confirm){
+                tbody.removeChild(tr);
+            }
+        }
+    }
+}
+</script>
+</body>
+</html>

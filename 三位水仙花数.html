@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>三位水仙花数</title>
+    <script>
+        for (var i=100;i<1000;i++){
+            var hundred=Math.floor(i/100);
+            var ten=Math.floor((i-hundred*100)/10);
+            var one=(i-hundred*100)%10;
+
+            var left=Math.pow(hundred,3)+Math.pow(ten,3)+Math.pow(one,3);
+
+            if (left==i){
+                document.write('<span>'+i+'</span><br>');
+            }
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

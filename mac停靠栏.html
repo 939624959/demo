@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mac停靠栏</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+            overflow: hidden;
+        }
+        .wrap{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .wrap img{
+            width: 64px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <img src="img/1.png">
+    <img src="img/2.png">
+    <img src="img/3.png">
+    <img src="img/4.png">
+    <img src="img/5.png">
+</div>
+<script>
+    window.onload=function () {
+        var imgs=document.querySelectorAll('.wrap > img');
+        var r=320;
+
+        document.onmousemove=function (ev) {
+            ev=ev||event;
+            for (var i=0;i<imgs.length;i++){
+               var a=imgs[i].getBoundingClientRect().left+imgs[i].offsetWidth/2-ev.clientX;
+               var b=imgs[i].getBoundingClientRect().top+imgs[i].offsetHeight/2-ev.clientY;
+               var dis=Math.sqrt(a*a+b*b);
+
+               if (dis>r){
+                   dis=r;
+               }
+                imgs[i].style.width=128-dis*0.2+'px';
+            }
+        }
+    }
+</script>
+</body>
+</html>

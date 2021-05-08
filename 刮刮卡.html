@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>刮刮卡</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+            overflow: hidden;
+        }
+        #canvas{
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: 1s;
+        }
+        ul,ul>li{
+            height: 100%;
+            background:url("img/b.png");
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas">
+    <span>您的浏览器不支持canvas，请更换为Chrome浏览器！</span>
+</canvas>
+<ul>
+    <li></li>
+</ul>
+</body>
+<script>
+window.onload=function () {
+    var oc=document.getElementById('canvas');
+    oc.width=document.documentElement.clientWidth;
+    oc.height=document.documentElement.clientHeight;
+    if (oc.getContext){
+        var ctx=oc.getContext('2d');
+        var img=new Image();
+        img.src='img/a.png';
+        img.onload=function(){
+            draw();
+        }
+        function draw() {
+            ctx.drawImage(img,0,0,oc.width,oc.height);
+
+            var flag=0;
+
+            oc.addEventListener('touchstart',function (ev) {
+                 ev=ev||window.event;
+                var touchC=ev.changedTouches[0];
+                var x=touchC.clientX-oc.offsetLeft;
+                var y=touchC.clientY-oc.offsetTop;
+
+                ctx.globalCompositeOperation='destination-out';
+                ctx.lineWidth=100;
+                ctx.lineCap='round';
+                ctx.lineJoin='round';
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(x,y);
+                ctx.lineTo(x+1,y+1);
+                ctx.stroke();
+                ctx.restore();
+            })
+
+            oc.addEventListener('touchmove',function (ev) {
+                ev=ev||window.event;
+                var touchC=ev.changedTouches[0];
+                var x=touchC.clientX-oc.offsetLeft;
+                var y=touchC.clientY-oc.offsetTop;
+
+                ctx.save();
+                ctx.lineTo(x,y);
+                ctx.stroke();
+                ctx.restore();
+            })
+
+            oc.addEventListener('touchend',function () {
+                var imgData=ctx.getImageData(0,0,oc.width,oc.height);
+                var allPx=imgData.width*imgData.height;
+                for (var i=0;i<allPx;i++){
+                    if(imgData.data[(4*i+3)]==0){
+                        flag++;
+                    }
+                }
+                if (flag>=allPx/2){
+                    oc.style.opacity=0;
+                }
+            })
+
+            oc.addEventListener('transitionend',function () {
+                this.remove();
+            })
+        }
+    }
+}
+</script>
+</html>

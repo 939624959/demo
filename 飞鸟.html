@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>飞鸟</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+            overflow: hidden;
+        }
+        #canvas{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%,-50%,0);
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas">
+    <span>您的浏览器不支持canvas，请更换为Chrome浏览器！</span>
+</canvas>
+</body>
+<script>
+    window.onload=function () {
+        var oc=document.getElementById('canvas');
+        oc.width=document.documentElement.offsetWidth;
+        oc.height=document.documentElement.offsetHeight;
+        if (oc.getContext) {
+            var ctx=oc.getContext('2d');
+            var img=new Image();
+            var flag=0;
+            var gap=0;
+            setInterval(function () {
+                ctx.clearRect(0,0,oc.width,oc.height);
+                flag++;
+                gap+=10;
+                if (flag==9){
+                    flag=1;
+                }
+                if (gap>=oc.width){
+                    gap=0;
+                }
+                img.src='img/q_r'+(flag)+'.jpg';
+                img.onload=function () {
+                    ctx.drawImage(img,gap,0,img.width,img.height)
+                }
+            },100)
+
+
+        }
+    }
+</script>
+</html>

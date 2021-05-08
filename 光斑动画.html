@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>光斑动画</title>
+    <style>
+        html,body{
+            height: 100%;
+            overflow: hidden;
+            background-color: black;
+            text-align: center;
+        }
+        h1{
+            font: bold 80px/100px '微软雅黑';
+            color: rgba(255,255,255,.3);
+            display: inline-block;
+            background: linear-gradient(120deg,rgba(255,255,255,0) 100px,rgba(255,255,255,1) 170px,rgba(255,255,255,0) 240px) no-repeat;
+            -webkit-background-clip: text;
+        }
+    </style>
+</head>
+<body>
+<h1>atguigu尚硅谷</h1>
+</body>
+<script>
+    var h1=document.querySelector('h1');
+    var flag=-160;
+    setInterval(function () {
+        flag+=10;
+        if (flag==600) {
+            flag=-160;
+        }
+        h1.style.backgroundPositionX=flag+'px';
+    },30)
+</script>
+</html>

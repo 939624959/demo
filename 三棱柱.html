@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>三棱柱</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            width: 500px;
+            height: 400px;
+            border: 1px solid;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            perspective: 300px;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            transition: 2s;
+            transform-style: preserve-3d;
+            transform-origin: center center -28.867513459481287px;
+        }
+        .box>div{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            text-align: center;
+            font: 50px/100px "微软雅黑";
+            position: absolute;
+            transform-origin: center center -28.867513459481287px;
+            backface-visibility: hidden;
+        }
+        .box>div:nth-child(2){
+            transform: rotateY(120deg);
+        }
+        .box>div:nth-child(3){
+            transform: rotateY(240deg);
+        }
+        .wrap:hover .box{
+            transform: rotateY(1turn);
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+</div>
+</body>
+</html>

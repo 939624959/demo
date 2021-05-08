@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>气泡效果</title>
+    <style>
+        .oc{
+            border:1px solid;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<canvas class="oc" height="400" width="150"></canvas>
+</body>
+<script>
+    window.onload=function () {
+        var oc=document.querySelector('.oc');
+        if (oc.getContext) {
+            var ctx=oc.getContext('2d');
+            var arr=[];
+
+            setInterval(function () {
+                var x=Math.random()*oc.width;
+                var r=Math.random()*6+2;
+                var y=oc.height-r-5;
+                var red=Math.round(Math.random()*255);
+                var green=Math.round(Math.random()*255);
+                var blue=Math.round(Math.random()*255);
+                var alph=1;
+                var deg=0;
+                var step=Math.random()*30+10;//曲线随机；
+                var startX=x;
+                var startY=y;
+
+                arr.push({
+                    x:x,
+                    y:y,
+                    r:r,
+                    red:red,
+                    green:green,
+                    blue:blue,
+                    alph:alph,
+                    deg:deg,
+                    step:step,
+                    startX:startX,
+                    startY:startY
+                })
+            },50)
+
+            setInterval(function () {
+                ctx.clearRect(0,0,oc.width,oc.height);
+
+                for (var i=0;i<arr.length;i++){
+                    if (arr[i].y<=20){
+                        arr.splice(i,1)
+                    }
+                    arr[i].deg+=5;//在y轴运动
+                    arr[i].y=arr[i].startY-(arr[i].deg*Math.PI/180)*arr[i].step*2;
+                    arr[i].x=arr[i].startX+Math.sin(arr[i].deg*Math.PI/180)*arr[i].step;
+
+
+                }
+
+                for (var i=0;i<arr.length;i++){
+                    ctx.save();
+                    ctx.fillStyle='rgba('+arr[i].red+','+arr[i].green+','+arr[i].blue+','+arr[i].alph+')';
+                    ctx.beginPath();
+                    ctx.arc(arr[i].x,arr[i].y,arr[i].r,0,2*Math.PI);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            },30)
+        }
+    }
+</script>
+</html>

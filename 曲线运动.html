@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>曲线运动</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+            overflow: hidden;
+        }
+        #curveNode{
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            background-color: #000000;
+            left: 50px;
+            top:400px;
+        }
+        .box{
+            position: absolute;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+<details open>
+    <!--<summary>今天天气真好啊</summary>-->
+    明天天气也不错 <br>
+    后天天气不咋滴
+</details>
+<ruby>
+    '澧' <rt>li</rt> '消费张'
+</ruby>
+<input type="range">
+<br>
+<br>
+<br>
+<form>
+    <fieldset>
+        <legend>Choose your favorite monster</legend>
+
+        <input type="radio" id="kraken" name="monster">
+        <label for="kraken">Kraken</label><br/>
+
+        <input type="radio" id="sasquatch" name="monster">
+        <label for="sasquatch">Sasquatch</label><br/>
+
+        <input type="radio" id="mothman" name="monster">
+        <label for="mothman">Mothman</label>
+    </fieldset>
+</form>
+
+<div id="curveNode"></div>
+<script>
+    window.onload=function () {
+        var curveNode=document.getElementById('curveNode');
+        var startX=curveNode.offsetLeft;
+        var startY=curveNode.offsetTop;
+
+        var deg=0;
+        setInterval(function () {
+            deg++;
+            curveNode.style.left=startX+(deg*Math.PI/180)*40+'px';
+            curveNode.style.top=startY+Math.sin(deg*Math.PI/180)*100+'px';
+
+            var boxNode=document.createElement('div');
+            boxNode.classList.add('box');
+            boxNode.style.left=curveNode.offsetLeft+'px';
+            boxNode.style.top=curveNode.offsetTop+'px';
+            document.body.appendChild(boxNode);
+
+
+        },30)
+    }
+</script>
+
+</body>
+</html>

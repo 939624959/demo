@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>发廊灯</title>
+    <style>
+        .box{
+            width: 40px;
+            height: 300px;
+            border: 1px solid;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+        .inner{
+            width: 40px;
+            height: 600px;
+            background: repeating-linear-gradient(135deg,black 0px,black 10px,white 10px,white 20px);
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="inner"></div>
+</div>
+<script>
+    var inner=document.querySelector('.inner');
+    var flag=0;
+    setInterval(function () {
+        flag++;
+        if (flag==300) {
+            flag=0;
+        }
+        inner.style.marginTop=-flag+'px';
+    },20)
+</script>
+</body>
+</html>

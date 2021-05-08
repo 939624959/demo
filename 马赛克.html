@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>马赛克</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+            overflow: hidden;
+        }
+        #canvas{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%,-50%,0);
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas">
+    <span>您的浏览器不支持canvas，请更换为Chrome浏览器！</span>
+</canvas>
+</body>
+<script>
+    window.onload=function () {
+        var oc=document.getElementById('canvas');
+        if (oc.getContext){
+            var ctx=oc.getContext('2d');
+            var img=new Image();
+            img.src='img/longma.jpeg';
+            img.onload=function () {
+                oc.width=img.width*2;
+                oc.height=img.height;
+
+                ctx.drawImage(img,0,0,img.width,img.height);
+                var oldImgData=ctx.getImageData(0,0,img.width,img.height);
+                var newImgData=ctx.createImageData(img.width,img.height);
+
+                var size=10;
+
+                for (var i=0; i<oldImgData.width/5;i++){
+                    for (var j=0;j<oldImgData.height/5;j++){
+                        // 获取一个马赛克块的随机颜色
+                        var random=Math.floor(Math.random()*size);
+                        var color=getPxInfo(oldImgData,i*size+random,j*size+random);
+                        //为一个马赛克块填充同一颜色
+                        for (var a=0;a<size;a++){
+                            for (var b=0;b<size;b++){
+                                setDataInfo(newImgData,i*size+a,j*size+b,color);
+                            }
+                        }
+                    }
+                }
+                ctx.putImageData(newImgData,img.width,0)
+            }
+
+            function getPxInfo(imgData,x,y) {
+                var color=[];
+                var w=imgData.width;
+                color[0]=imgData.data[(y*w+x)*4];
+                color[1]=imgData.data[(y*w+x)*4+1];
+                color[2]=imgData.data[(y*w+x)*4+2];
+                color[3]=imgData.data[(y*w+x)*4+3];
+                return color;
+            }
+
+            function setDataInfo(imgData,x,y,color) {
+                var w=imgData.width;
+                imgData.data[(y*w+x)*4]=color[0];
+                imgData.data[(y*w+x)*4+1]=color[1];
+                imgData.data[(y*w+x)*4+2]=color[2];
+                imgData.data[(y*w+x)*4+3]=color[3];
+            }
+        }
+    }
+</script>
+</html>

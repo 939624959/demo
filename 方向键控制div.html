@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>方向键控制div</title>
+    <style>
+        .box{width: 100px;height: 100px;background-color: #bfa;position: absolute;left: 0;top: 0;}
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<script>
+    window.onload=function () {
+        var dir=0;
+        var speed=10;
+        var box=document.querySelector('.box');
+        setInterval(function () {
+            switch (dir) {
+                case 37:
+                    box.style.left=box.offsetLeft-speed+'px';
+                    break;
+                case 38:
+                    box.style.top=box.offsetTop-speed+'px';
+                    break;
+                case 39:
+                    box.style.left=box.offsetLeft+speed+'px';
+                    break;
+                case 40:
+                    box.style.top=box.offsetTop+speed+'px';
+                    break;
+            }
+
+        },30)
+
+        document.onkeydown=function (ev) {
+            ev=ev||event;
+            if (ev.altKey){speed=30;}else {speed=10;}
+            dir=ev.keyCode;
+        }
+        document.onkeyup=function () {
+            dir=0;
+        }
+    }
+</script>
+</body>
+</html>

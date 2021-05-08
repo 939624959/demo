@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>旋转缩放的正方形</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+            overflow: hidden;
+            background-color: gray;
+        }
+        #canvas{
+            position: absolute;
+            left: 50%;
+            top:50%;
+            transform: translate3d(-50%,-50%,0);
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="400">
+    您的浏览器不支持canvas，请更换为Chrome浏览器！
+</canvas>
+</body>
+<script>
+    window.onload=function () {
+        var oc=document.querySelector('#canvas');
+        if (oc.getContext){
+          var  ctx=oc.getContext('2d');
+        }
+        var deg=Math.PI/180;
+        // 初始化坐标原点
+        ctx.translate(300,200);
+        var flag=0;
+        var scal=0;
+        var inc=10;
+        // 设置画布内容运动
+        setInterval(function () {
+            flag++;
+            // 清除画布
+            ctx.clearRect(-300,-200,oc.width,oc.height)
+            ctx.save();
+            ctx.beginPath();
+            // 旋转坐标系
+            ctx.rotate(flag*deg);
+            // 缩放画布
+            if(scal>=200){
+                inc=-4;
+            }else if(scal<=0){
+                inc=4;
+            }
+            scal+=inc;
+            ctx.scale(scal/100,scal/100);
+            // 绘制
+            ctx.rect(-50,-50,100,100);
+            ctx.fill();
+            ctx.restore();
+        },20)
+    }
+</script>
+</html>
